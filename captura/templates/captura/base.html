@@ -33,12 +33,12 @@
 		Programa externo: {{documento.programa_externo.nombre}} <br><br>
 		Nombre del Capturista: {{documento.capturista.first_name}} {{documento.capturista.last_name}} <br><br>
 		Nombre del Prospecto o Alumno: {{documento.alumno_prospecto}} <br><br>
-		<a href="/">Ir a el documento</a>
-		<button onclick="editar_documento()" id="editar_documento">Editar documento</button>
+		<a href="/" class="boton">Ir a el documento</a>
+		<button onClick="editar_documento()" id="editar_documento">Editar documento</button>
 		<input type="hidden" value="{{documento.id}}" id="documento_id">
 		<br><br>
 	{%endif%}
-		<a href="/asignar_documento/0/">Nuevo Documento</a>
+		<a href="/asignar_documento/0/" class="boton">Nuevo Documento</a>
 	{%block body%}
 	{%endblock body%}
 

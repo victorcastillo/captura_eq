@@ -1,5 +1,6 @@
 {%extends "captura/base.html"%}
 {%block body%}
+<div class="modal_agregar" style="width:300px;">
 	<form action="/buscador/" method="GET">
 		{{formulario.as_p}}
 		<input type="submit" value="Buscar">
@@ -21,3 +22,4 @@
 		<p>No hay documentos</p>
 	{%endfor%}
 {%endblock body%}
+</div>
