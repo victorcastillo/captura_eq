@@ -36,12 +36,16 @@ class MateriaExterna(models.Model):
 
 
 class DetalleDocumento(models.Model):
-	documento = models.ForeignKey('Documento')
-	materia_externa = models.ForeignKey('MateriaExterna')
-	materia_utel = models.ForeignKey('Cat_Asignatura')
-	calificacion = models.CharField(max_length=15, null=True)
-	fecha_insert = models.DateTimeField(auto_now_add=True)
-	fecha_update = models.DateTimeField(auto_now_add=True)
+  documento = models.ForeignKey('Documento')
+  materia_externa = models.ForeignKey('MateriaExterna')
+  materia_utel = models.ForeignKey('Cat_Asignatura')
+  calificacion = models.CharField(max_length=15, null=True)
+  fecha_insert = models.DateTimeField(auto_now_add=True)
+  fecha_update = models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+    unique_together = ('documento', 'materia_externa')
+
 
   # class Meta:
   #   unique_together = ('documento', 'materia_externa')
