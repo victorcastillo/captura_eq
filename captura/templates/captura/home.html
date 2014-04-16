@@ -22,6 +22,7 @@
 	</script>
 {%endblock js%}
 {%block body%}
+<div class="contenedor">
 	{%if documento_%}
 		<button id="agregar_pre_dic"> Agregar Materia</button>
 		<br> <br>
@@ -39,7 +40,8 @@
 			<br>
 		{%endfor%}
 	{%else%}
-		<button id="agregar_eq"> Agregar Documento</button>
+		<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
 	{%endif%}
-	<a href="/buscador/">Ir al Buscador</a>
+	<a href="/buscador/" class="boton">Ir al Buscador</a>
+    </div>
 {%endblock body%}

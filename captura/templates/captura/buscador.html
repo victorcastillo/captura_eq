@@ -1,23 +1,43 @@
 {%extends "captura/base.html"%}
 {%block body%}
+<div class="contenedor">
+<div class="cabecera buscador">Buscador</div>
+<div class="contenedor_bucador">
 	<form action="/buscador/" method="GET">
 		{{formulario.as_p}}
+        <div class="botones_modal btn_buscador">
 		<input type="submit" value="Buscar">
+        </div>
 	</form>
+    </div>
 	{%for documento in resultados%}
-		<div>
-			Universidad: {{documento.universidad}} <br><br>
-			{%if documento.folio%}
-				Folio: {{documento.folio}} <br><br>
-			{%endif%}
-			Tipo del documento: {{documento.tipo_docto.tipo_docto}} <br><br>
-			Programa Externo: {{documento.programa_externo.nombre}} <br><br>
-			Nombre del Capturista: {{documento.capturista.first_name}} {{documento.capturista.last_name}} <br><br>
-			Nombre del Alumno o Prospecto: {{documento.alumno_prospecto}} <br><br>
-			<a href="/asignar_documento/{{documento.id}}/">Ir a este Documento</a>
-		</div>
-		<br>
+		<div class="datos_resultados">
+  <table class="resultados_busqueda">
+  <tr>
+    <th>Universidad</th>
+    <th>Folio</td>
+    <th>Tipo del documento</th>
+    <th>Programa Externo</th>
+    <th>Nombre del Capturista</th>
+    <th>Nombre del Alumno o Prospecto</th>
+    <th>Acciones</th>
+  </tr>
+  <tr>
+    <td>{{documento.universidad}}</td>
+    <td>{%if documento.folio%}
+				 {{documento.folio}}
+			{%endif%}</td>
+    <td>{{documento.tipo_docto.tipo_docto}}</td>
+    <td>{{documento.programa_externo.nombre}}</td>
+    <td>{{documento.capturista.first_name}} {{documento.capturista.last_name}}</td>
+	<td>{{documento.alumno_prospecto}}</td>
+    <td><a href="/asignar_documento/{{documento.id}}/">Ir a este Documento</a></td>
+  </tr>
+</table>
+</div>
 	{%empty%}
 		<p>No hay documentos</p>
 	{%endfor%}
+
+</div>
 {%endblock body%}

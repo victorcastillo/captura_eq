@@ -34,12 +34,13 @@
 
 </head>
 <body>
+<div class="modal_agregar" style="width:300px;">
 		<form action="/agregar_documento_post/" method="POST">{%csrf_token%}
 		{{formulario.as_p}}
 		<input type="submit" value="Guardar">
 	</form>
 	<span class="errores"></span>
-
+</div>
 </body>
 </html>
 
