@@ -31,14 +31,18 @@
 
 </head>
 <body>
+<div class="modal_agregar" style="width:300px;">
+<h1>Editar documento</h1>
 		<form action="/editar_documento_post/" method="POST">
 		{%csrf_token%}
 		{{formulario.as_p}}
+        <div class="botones_modal">
 		<input type="submit" value="Guardar">
+        </div>
 	</form>
 	<input type="hidden" id="documento_id" value="{{documento.id}}">
 	<span class="errores"></span>
-
+</div>
 </body>
 </html>
 

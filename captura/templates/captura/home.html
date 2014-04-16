@@ -22,24 +22,25 @@
 	</script>
 {%endblock js%}
 {%block body%}
-<div class="contenedor">
 	{%if documento_%}
-		<button id="agregar_pre_dic"> Agregar Materia</button>
-		<br> <br>
+    <div class="botones_modal btn_resultado">
+		<button id="agregar_pre_dic" class="btn_agregar_doc"> Agregar Materia</button>
+		</div>
 		{%for materia in detalles_documentos%}
-			<div>
-				Asignatura UTEL: {{materia.materia_utel.asignatura}} <br><br>
-				Asignatura Externa: {{materia.materia_externa.nombre}} <br><br>
+			<div class="informacion_documento">
+				<p class="asignaturas"><b>Asignatura UTEL:</b></b><br /> {{materia.materia_utel.asignatura}}</p>
+				<p class="asignaturas"><b>Asignatura Externa:</b><br /> {{materia.materia_externa.nombre}}</p>
 				{%if materia.calificacion%}
-					Calificacion {{materia.calificacion}} <br><br>
+					<p class="calificacion"><b>Calificacion:</b><br /> {{materia.calificacion}}</p>
 				{%endif%}
 				{%if user == materia.documento.capturista%}
-					<button class="materia" onclick="editar_materia({{materia.id}})">Editar Materia</button>
+					<p class="acciones"><button class="materia" onclick="editar_materia({{materia.id}})" title="Editar Materia"></button></p>
 				{%endif%}
-			</div>
+                </div>
 			<br>
 		{%endfor%}
 	{%else%}
+    <div class="botones_modal btn_resultado">
 		<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
 	{%endif%}
 	<a href="/buscador/" class="boton">Ir al Buscador</a>

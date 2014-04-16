@@ -24,29 +24,34 @@
 	{%endblock js%}
 </head>
 <body>
+<div class="contenedor">
 <br>
 <h1>Administración de captura de documentos</h1>
-	{%if documento%}
-		Universidad: {{documento.universidad}} <br><br>
-		{%if documento.folio%}
-			Folio: {{documento.folio}} <br><br>
-		{%endif%}
-		Tipo del documento: {{documento.tipo_docto.tipo_docto}} <br><br>
-		Programa externo: {{documento.programa_externo.nombre}} <br><br>
-		Nombre del Capturista: {{documento.capturista.first_name}} {{documento.capturista.last_name}} <br><br>
-		Nombre del Prospecto o Alumno: {{documento.alumno_prospecto}} <br><br>
-		<a href="/" class="boton">Ir a el documento</a>
-		<button onClick="editar_documento()" id="editar_documento">Editar documento</button>
-		<input type="hidden" value="{{documento.id}}" id="documento_id">
-		<br><br>
-	{%endif%}
-	{%if user.is_authenticated%}
+{%if user.is_authenticated%}
      <div class="autentificacion">
-		<a href="/asignar_documento/0/" class="btn_agregar_doc">Nuevo Documento</a>
+		<a href="/asignar_documento/0/" class="btn_nuevo_doc">Nuevo Documento</a>
 		<a href="/logout" class="salir">Salir</a>
     </div>
+{%endif%}
+<div class="informacion_documento no_borde">
+	{%if documento%}
+		<p><b>Universidad:</b><br> {{documento.universidad}}</p>
+		{%if documento.folio%}
+			<p><b>Folio:</b><br> {{documento.folio}}</p>
+		{%endif%}
+		<p><b>Tipo del documento:</b><br> {{documento.tipo_docto.tipo_docto}}</p>
+		<p><b>Programa externo:</b><br> {{documento.programa_externo.nombre}}</p>
+		<p><b>Nombre del Capturista:</b><br> {{documento.capturista.first_name}} {{documento.capturista.last_name}}</p>
+		<p><b>Nombre del Prospecto o Alumno:</b><br> {{documento.alumno_prospecto}}</p>
+        <div class="botones_documento">
+        <a href="/" class="boton">Ir a el documento</a>
+		<button onClick="editar_documento()" id="editar_documento" class="editar_documento">Editar documento</button>
+		<input type="hidden" value="{{documento.id}}" id="documento_id">
+        </div>
 	{%endif%}
+    </div>
 	{%block body%}
 	{%endblock body%}
+    </div>
 </body>
 </html>

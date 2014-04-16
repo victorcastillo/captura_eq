@@ -184,6 +184,24 @@ h1{
 	}
 .login input{
 	margin-bottom:10px;}
+.informacion_documento{
+	width:850px;
+	color:#777;
+	margin:0px auto;
+	border-bottom:1px dotted #ccc;}
+.informacion_documento p{
+	display:inline-block;
+	width:30%;}
+.informacion_documento p.asignaturas{
+	width:35% !important;
+	vertical-align:top;}
+.informacion_documento p.calificacion{
+	width:10% !important;
+	vertical-align:top;}
+.informacion_documento p.acciones{
+	width:15% !important;
+	vertical-align:top;
+	text-align:right;}
 .contenedor{
 	width:900px;
 	background:#fff;
@@ -194,7 +212,6 @@ h1{
 	color:#666;
 	box-shadow:1px 1px 1px #ccc;
 	margin:0 auto;
-	margin-top:20px;
 	min-height:300px;
 	padding:20px;
 	}
@@ -213,11 +230,45 @@ h1{
 .salir:hover{
 	background:url(img/salir2.png) no-repeat;
 	color:#d52b1e;}
+.btn_nuevo_doc{
+	background:url(img/agregar_archivos.png) no-repeat;
+	padding:5px 25px;
+	text-decoration:none;
+	font-size:14px;
+	font-weight:bold;
+	color:#777;
+	margin-left:20px;}
+.btn_nuevo_doc:hover{
+	background:url(img/agregar_archivos2.png) no-repeat;
+	color:#d52b1e;}
 .autentificacion{
 	width:900px;
-	margin:10px auto;
+	margin:10px auto 20px;
 	text-align:right;}
 .btn_agregar_doc{
+	text-align:center;
+	text-decoration:none;
+    color:#666;
+	height:auto;
+	padding-bottom:5px;
+	padding-top:5px;
+	padding-left:35px;
+	padding-right:5px;
+	text-shadow:1px 1px #FFF;
+	position: relative;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background:url(img/agregar_icon.png) no-repeat 0px 0px;
+	background-color:#eff0ef;
+	margin-bottom:10px;
+	margin-right:3px;
+	font-weight:bold;}
+.btn_agregar_doc:hover{
+	background:url(img/agregar_icon2.png) no-repeat 0px 0px;
+	background-color:#d6e7c6;}
+.editar_documento{
 	text-align:center;
 	text-decoration:none;
     color:#666;
@@ -233,13 +284,13 @@ h1{
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	background:url(img/agregar_icon.png) no-repeat 0px 0px;
+	background:url(img/modificar_icon.png) no-repeat 0px 0px;
 	background-color:#eff0ef;
 	margin-bottom:10px;
 	margin-right:3px;
 	font-weight:bold;}
-.btn_agregar_doc:hover{
-	background:url(img/agregar_icon2.png) no-repeat 0px 0px;
+.editar_documento:hover{
+	background:url(img/modificar_icon2.png) no-repeat 0px 0px;
 	background-color:#d6e7c6;}
 .buscador{
 	width:90%;
@@ -260,6 +311,8 @@ h1{
 	margin-left:10px;}
 .btn_buscador{
 	margin-right:15px;}
+.btn_resultado{
+	margin-right:25px;}
 .resultados_busqueda{
 	width:90%;
 	margin:20px auto;
@@ -276,4 +329,23 @@ h1{
 .resultados_busqueda td{
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:11px;
-	color:#666;}
+	color:#666;
+	padding:5px 10px;}
+.botones_documento{
+	width:100%;
+	text-align:right;
+	padding-right:20px;
+	margin-top:10px;
+	float:none;}
+.materia{
+	background:url(img/editar1.png) no-repeat;
+	border:0px;
+	padding:5px 10px;
+	opacity:0.7;
+	}
+.materia:hover{
+	background:url(img/editar2.png) no-repeat;
+	border:0px;
+	opacity:1;}
+.no_borde{
+	border:none;}

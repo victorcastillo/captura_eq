@@ -1,6 +1,5 @@
 {%extends "captura/base.html"%}
 {%block body%}
-<div class="contenedor">
 <div class="cabecera buscador">Buscador</div>
 <div class="contenedor_bucador">
 	<form action="/buscador/" method="GET">
@@ -38,6 +37,4 @@
 	{%empty%}
 		<p>No hay documentos</p>
 	{%endfor%}
-
-</div>
 {%endblock body%}
