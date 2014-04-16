@@ -38,7 +38,10 @@
 		<input type="hidden" value="{{documento.id}}" id="documento_id">
 		<br><br>
 	{%endif%}
+	{%if user.is_authenticated%}
 		<a href="/asignar_documento/0/">Nuevo Documento</a>
+		<a href="/logout">Salir</a>
+	{%endif%}
 	{%block body%}
 	{%endblock body%}
 

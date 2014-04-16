@@ -32,7 +32,9 @@
 				{%if materia.calificacion%}
 					Calificacion {{materia.calificacion}} <br><br>
 				{%endif%}
-				<button class="materia" onclick="editar_materia({{materia.id}})">Editar Materia</button>
+				{%if user == materia.documento.capturista%}
+					<button class="materia" onclick="editar_materia({{materia.id}})">Editar Materia</button>
+				{%endif%}
 			</div>
 			<br>
 		{%endfor%}
