@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-
 
 def login_view(request):
 	if not request.user.is_authenticated():
@@ -17,6 +16,11 @@ def login_view(request):
 				return HttpResponseRedirect('/')
 		return render(request, 'captura/login.html', {})
 	return HttpResponseRedirect('/')
+
+def logout_view(request):
+	logout(request)
+	return HttpResponseRedirect('/')
+
 
 @login_required
 def home(request):
@@ -183,6 +187,14 @@ def agregar_pre_dic_post(request):
 			materia_externa = materia_externa[0]
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
+		if doc_existe:
+			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
+        	content = json.dumps(response)
+        	http_response = HttpResponse(content, mimetype='application/json')
+        	http_response.status_code = 500
+        	http_response.content = content
+        	return http_response			
 		detalle_documento.materia_externa = materia_externa
 		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
 		detalle_documento.save()
@@ -238,6 +250,15 @@ def editar_materia_post(request, id_materia):
 			materia_externa = materia_externa[0]
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
+		
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
+		if doc_existe:
+			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
+        	content = json.dumps(response)
+        	http_response = HttpResponse(content, mimetype='application/json')
+        	http_response.status_code = 500
+        	http_response.content = content
+        	return http_response			
 		detalle_documento.materia_externa = materia_externa
 		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
 		detalle_documento.fecha_update = datetime.datetime.now()

@@ -24,6 +24,8 @@
 	{%endblock js%}
 </head>
 <body>
+<br>
+<h1>Administración de captura de documentos</h1>
 	{%if documento%}
 		Universidad: {{documento.universidad}} <br><br>
 		{%if documento.folio%}
@@ -38,9 +40,13 @@
 		<input type="hidden" value="{{documento.id}}" id="documento_id">
 		<br><br>
 	{%endif%}
-		<a href="/asignar_documento/0/" class="boton">Nuevo Documento</a>
+	{%if user.is_authenticated%}
+     <div class="autentificacion">
+		<a href="/asignar_documento/0/" class="btn_agregar_doc">Nuevo Documento</a>
+		<a href="/logout" class="salir">Salir</a>
+    </div>
+	{%endif%}
 	{%block body%}
 	{%endblock body%}
-
 </body>
 </html>

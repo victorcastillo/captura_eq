@@ -7,6 +7,7 @@ urlpatterns = patterns('captura.views',
     # Examples:
     url(r'^$', 'home', name='home'),
     url(r'^login/', 'login_view'),
+    url(r'^logout/', 'logout_view'),
     url(r'^agregar_documento/', 'agregar_documento'),
     url(r'^agregar_documento_post/', 'agregar_documento_post'),
     url(r'^autocomplete_materia_utel/', 'autocomplete_materia_utel'),
