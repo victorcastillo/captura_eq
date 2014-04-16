@@ -5,6 +5,7 @@
 		$('#agregar_pre_dic').click(function(){
 			$.get('/agregar_pre_dic/', function(data) {
 				$.fancybox(data);
+				$.fancybox.center(true);
 			});
 		});
 	});
@@ -12,11 +13,13 @@
 	function editar_materia(id_materia){
 		$.get('/editar_materia/' + id_materia  +'/', function(data) {
 			$.fancybox(data);
+			$.fancybox.center(true);
 		});
 	}
 	  	function editar_documento(){
     		$.get('/editar_documento/' + $('#documento_id').val() +'/', function(data) {
 				$.fancybox(data);
+				$.fancybox.center(true);
 			});
     	}
 	</script>
@@ -35,8 +38,10 @@
 		<br><br>
 
 <div class="contenedor">
+	{%if user == documento_.capturista%}
 		<button id="agregar_pre_dic"> Agregar Materia</button>
 		<br> <br>
+	{%endif%}
 		{%for materia in detalles_documentos%}
 			<div>
 				Asignatura UTEL: {{materia.materia_utel.asignatura}} <br><br>

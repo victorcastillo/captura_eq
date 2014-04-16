@@ -17,7 +17,7 @@
 		$('#id_materia_a_revalidar').autocomplete({
 			source: '/autocomplete_materias_externas/'
 		});
-		$('form').submit(function(event){
+		$('#editar_materia_post').submit(function(event){
 			event.preventDefault();
 			$.post('/editar_materia_post/' + $('#id_materia').val() + '/', $('form').serialize(), function(data, textStatus, xhr) {
 				window.location.reload();
@@ -34,7 +34,7 @@
 
 </head>
 <body>
-		<form action="/editar_materia_post/" method="POST">{%csrf_token%}
+		<form id="editar_materia_post" action="/editar_materia_post/" method="POST">{%csrf_token%}
 		{{formulario.as_p}}
 		<input type="submit" value="Guardar">
 	</form>

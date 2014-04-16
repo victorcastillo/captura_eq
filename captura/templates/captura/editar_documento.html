@@ -14,7 +14,7 @@
 		$('#id_programa_externo').autocomplete({
 			source: '/autocomplete_programas_externos/'
 		});
-		$('form').submit(function(event){
+		$('#editar_documento_post').submit(function(event){
 			event.preventDefault();
 			$.post('/editar_documento_post/' + $('#documento_id').val() +'/', $('form').serialize(), function(data, textStatus, xhr) {
 				window.location.reload();
@@ -31,7 +31,7 @@
 
 </head>
 <body>
-		<form action="/editar_documento_post/" method="POST">
+		<form id="editar_documento_post" action="/editar_documento_post/" method="POST">
 		{%csrf_token%}
 		{{formulario.as_p}}
 		<input type="submit" value="Guardar">

@@ -17,6 +17,7 @@
     		$('#agregar_eq').click(function(){
 			$.get('/agregar_documento/', function(data) {
 				$.fancybox(data);
+				$.fancybox.center(true);
 			});
 		});
     	});
@@ -30,6 +31,7 @@
 <h1>Administración de captura de documentos</h1>
 	{%if user.is_authenticated%}
      <div class="autentificacion">
+     	<p>Hola {{user.first_name}} {{user.last_name}}</p>
      	<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
 		<a href="/logout" class="salir">Salir</a>
     </div>

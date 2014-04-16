@@ -10,11 +10,10 @@
 				$(".errores").empty();
 			}
 		});
-
 		$('#id_programa_externo').autocomplete({
 			source: '/autocomplete_programas_externos/'
 		});
-		$('form').submit(function(event){
+		$('#agregar_documento_post').submit(function(event){
 			event.preventDefault();
 			$.post('/agregar_documento_post/', $('form').serialize(), function(data, textStatus, xhr) {
 				window.location.assign(data);
@@ -33,7 +32,7 @@
 <body>
     <h1>Agregar documento</h1>
     <div class="modal_agregar" style="width:300px;">
-            <form action="/agregar_documento_post/" method="POST">{%csrf_token%}
+            <form id="agregar_documento_post" action="/agregar_documento_post/" method="POST">{%csrf_token%}
             {{formulario.as_p}}
     <div class="botones_modal"><input type="submit" value="Guardar"></div>
         </form>

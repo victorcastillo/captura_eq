@@ -10,14 +10,13 @@
 				$(".errores").empty();
 			}
 		});
-
 		$('#id_materia_utel').autocomplete({
 			source: '/autocomplete_materia_utel/'
 		});
 		$('#id_materia_a_revalidar').autocomplete({
 			source: '/autocomplete_materias_externas/'
 		});
-		$('form').submit(function(event){
+		$('#agregar_pre_dic_post').submit(function(event){
 			event.preventDefault();
 			$.post('/agregar_pre_dic_post/' + window.location.pathname.split('/')[2] + '/', $('form').serialize(), function(data, textStatus, xhr) {
 				window.location.reload();
@@ -35,7 +34,7 @@
 </head>
 <body>
 <div class="modal_agregar" style="width:300px;">
-		<form action="/agregar_documento_post/" method="POST">{%csrf_token%}
+		<form id="agregar_pre_dic_post" action="/agregar_pre_dic_post/" method="POST">{%csrf_token%}
 		{{formulario.as_p}}
 		<input type="submit" value="Guardar">
 	</form>
