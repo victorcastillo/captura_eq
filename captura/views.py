@@ -47,7 +47,7 @@ def agregar_documento(request):
 def agregar_documento_post(request):
 	from .forms import DocumentoForm
 	import json
-	from .models import *
+	from .models import Documento, LogDocto, ProgramaExterno
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
 		documento = Documento()
@@ -106,7 +106,7 @@ def editar_documento(request, id_documento):
 def editar_documento_post(request, id_documento):
 	from .forms import DocumentoForm
 	import json
-	from .models import *
+	from .models import Documento, LogDocto, ProgramaExterno
 	import datetime
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
@@ -174,7 +174,7 @@ def agregar_pre_dic(request):
 def agregar_pre_dic_post(request):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import *
+	from .models import DetalleDocumento, LogDetalleDocto, MateriaExterna, Documento, Cat_Asignatura
 	formulario = DetalleDocumentoForm(request.POST)
 	if formulario.is_valid():
 		detalle_documento = DetalleDocumento()
@@ -190,11 +190,11 @@ def agregar_pre_dic_post(request):
 		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
 		if doc_existe:
 			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
-        	content = json.dumps(response)
-        	http_response = HttpResponse(content, mimetype='application/json')
-        	http_response.status_code = 500
-        	http_response.content = content
-        	return http_response			
+			content = json.dumps(response)
+			http_response = HttpResponse(content, mimetype='application/json')
+			http_response.status_code = 500
+			http_response.content = content
+			return http_response			
 		detalle_documento.materia_externa = materia_externa
 		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
 		detalle_documento.save()
@@ -237,7 +237,7 @@ def editar_materia(request, id_materia):
 def editar_materia_post(request, id_materia):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import *
+	from .models import LogDetalleDocto, DetalleDocumento, MateriaExterna, Cat_Asignatura
 	import datetime
 	
 	formulario = DetalleDocumentoForm(request.POST)
@@ -251,7 +251,7 @@ def editar_materia_post(request, id_materia):
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
 		
-		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=detalle_documento.documento)
 		if doc_existe:
 			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
         	content = json.dumps(response)

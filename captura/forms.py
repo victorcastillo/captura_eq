@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import TipoDocto, Cat_Asignatura
+from .models import TipoDocto, Cat_Asignatura, Documento
 from django.utils.encoding import smart_unicode 
 from django.contrib.auth.models import User
 
@@ -17,11 +17,14 @@ class DocumentoForm(forms.Form):
 	def clean(self):
 		tipo_docto = self.data['tipo_docto']
 		if tipo_docto:
-			tipo_docto = TipoDocto.objects.get(id=tipo_docto).tipo_docto
+			tipo_docto = TipoDocto.objects.get(id=tipo_docto)
 			folio = self.data['folio']
-			if tipo_docto != "Predictamen":
+			if tipo_docto.tipo_docto != "Predictamen":
 				if (folio is None) or len(folio) == 0:
 					self._errors['folio'] = self.error_class([smart_unicode('Cuando es un Dictamen debe proporcionar el folio que viene en el documento.')])
+			busqueda = Documento.objects.filter(alumno_prospecto=self.data['alumno_prospecto'], tipo_docto=tipo_docto)
+			if busqueda:
+				self._errors['alumno_prospecto'] = self.error_class([smart_unicode('La combinación del  nombre del Alumno/Prospecto junto con el Tipo de documento deben ser unicos.')])
 		# if self.data['materia_utel']			:
 		# 	materia = Cat_Asignatura.objects.filter(asignatura = self.data['materia_utel'])
 		# 	if not materia:
