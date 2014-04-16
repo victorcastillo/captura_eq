@@ -17,7 +17,7 @@
 		$('form').submit(function(event){
 			event.preventDefault();
 			$.post('/agregar_documento_post/', $('form').serialize(), function(data, textStatus, xhr) {
-				window.location.reload();
+				window.location.assign(data);
 			}).error(function(data){
 				$.each(JSON.parse(data.responseText).errores, function(index, val) {
 					var mensaje = '<p>'  + val  + '</p>';

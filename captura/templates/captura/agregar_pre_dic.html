@@ -19,7 +19,7 @@
 		});
 		$('form').submit(function(event){
 			event.preventDefault();
-			$.post('/agregar_pre_dic_post/', $('form').serialize(), function(data, textStatus, xhr) {
+			$.post('/agregar_pre_dic_post/' + window.location.pathname.split('/')[2] + '/', $('form').serialize(), function(data, textStatus, xhr) {
 				window.location.reload();
 			}).error(function(data){
 				$.each(JSON.parse(data.responseText).errores, function(index, val) {

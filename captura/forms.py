@@ -5,9 +5,9 @@ from django.utils.encoding import smart_unicode
 from django.contrib.auth.models import User
 
 class DocumentoForm(forms.Form):
+	alumno_prospecto = forms.CharField(required=True, error_messages = {'required': "El nombre del Alumno/Prospecto es requerido."})
 	universidad = forms.CharField(required=True, error_messages = {'required': "La universidad es requerida."})
 	programa_externo = forms.CharField(required=True, error_messages = {'required': "El programa externo es requerido."})
-	alumno_prospecto = forms.CharField(required=True, error_messages = {'required': "El nombre del Alumno/Prospecto es requerido."})
 	tipo_docto = forms.ModelChoiceField(required=True, queryset=TipoDocto.objects.filter(habilitado=True), error_messages = {'required': "El tipo de documento es requerido."})
 	folio = forms.CharField(required=False)
 	# materia_a_revalidar = forms.CharField(required=True, error_messages = {'required': "La Materia externa es requerida."})
@@ -22,9 +22,6 @@ class DocumentoForm(forms.Form):
 			if tipo_docto.tipo_docto != "Predictamen":
 				if (folio is None) or len(folio) == 0:
 					self._errors['folio'] = self.error_class([smart_unicode('Cuando es un Dictamen debe proporcionar el folio que viene en el documento.')])
-			busqueda = Documento.objects.filter(alumno_prospecto=self.data['alumno_prospecto'], tipo_docto=tipo_docto)
-			if busqueda:
-				self._errors['alumno_prospecto'] = self.error_class([smart_unicode('La combinación del  nombre del Alumno/Prospecto junto con el Tipo de documento deben ser unicos.')])
 		# if self.data['materia_utel']			:
 		# 	materia = Cat_Asignatura.objects.filter(asignatura = self.data['materia_utel'])
 		# 	if not materia:

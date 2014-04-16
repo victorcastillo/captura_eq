@@ -2,11 +2,6 @@
 {%block js%}
 	<script>
 	jQuery(document).ready(function($) {
-		$('#agregar_eq').click(function(){
-			$.get('/agregar_documento/', function(data) {
-				$.fancybox(data);
-			});
-		});
 		$('#agregar_pre_dic').click(function(){
 			$.get('/agregar_pre_dic/', function(data) {
 				$.fancybox(data);
@@ -19,11 +14,27 @@
 			$.fancybox(data);
 		});
 	}
+	  	function editar_documento(){
+    		$.get('/editar_documento/' + $('#documento_id').val() +'/', function(data) {
+				$.fancybox(data);
+			});
+    	}
 	</script>
 {%endblock js%}
 {%block body%}
+		Universidad: {{documento_.universidad}} <br><br>
+		{%if documento_.folio%}
+			Folio: {{documento_.folio}} <br><br>
+		{%endif%}
+		Tipo del documento: {{documento_.tipo_docto.tipo_docto}} <br><br>
+		Programa externo: {{documento_.programa_externo.nombre}} <br><br>
+		Nombre del Capturista: {{documento_.capturista.first_name}} {{documento_.capturista.last_name}} <br><br>
+		Nombre del Prospecto o Alumno: {{documento_.alumno_prospecto}} <br><br>
+		<button onClick="editar_documento()" id="editar_documento">Editar documento</button>
+		<input type="hidden" value="{{documento_.id}}" id="documento_id">
+		<br><br>
+
 <div class="contenedor">
-	{%if documento_%}
 		<button id="agregar_pre_dic"> Agregar Materia</button>
 		<br> <br>
 		{%for materia in detalles_documentos%}
@@ -39,9 +50,6 @@
 			</div>
 			<br>
 		{%endfor%}
-	{%else%}
-		<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
-	{%endif%}
 	<a href="/buscador/" class="boton">Ir al Buscador</a>
     </div>
 {%endblock body%}

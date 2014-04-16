@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('captura.views',
     # Examples:
-    url(r'^$', 'home', name='home'),
+    url(r'^documento/(?P<id_documento>\d+)/$', 'home', name='home'),
     url(r'^login/', 'login_view'),
     url(r'^logout/', 'logout_view'),
     url(r'^agregar_documento/', 'agregar_documento'),
@@ -14,7 +14,7 @@ urlpatterns = patterns('captura.views',
     url(r'^autocomplete_materias_externas/', 'autocomplete_materias_externas'),
     url(r'^autocomplete_programas_externos/', 'autocomplete_programas_externos'),
     url(r'^agregar_pre_dic/', 'agregar_pre_dic'),
-    url(r'^agregar_pre_dic_post/', 'agregar_pre_dic_post'),
+    url(r'^agregar_pre_dic_post/(?P<id_documento>\d+)/', 'agregar_pre_dic_post'),
     url(r'^buscador/', 'buscador'),
     url(r'^editar_documento/(?P<id_documento>\d+)/', 'editar_documento'),
     url(r'^editar_documento_post/(?P<id_documento>\d+)/', 'editar_documento_post'),
