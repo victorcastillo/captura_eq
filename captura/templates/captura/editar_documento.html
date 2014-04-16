@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+		<script>
+	jQuery(document).ready(function($) {
+		$.ajaxSetup({
+			beforeSend: function(){
+				$(".errores").empty();
+			}
+		});
+
+		$('#id_programa_externo').autocomplete({
+			source: '/autocomplete_programas_externos/'
+		});
+		$('form').submit(function(event){
+			event.preventDefault();
+			$.post('/editar_documento_post/' + $('#documento_id').val() +'/', $('form').serialize(), function(data, textStatus, xhr) {
+				window.location.reload();
+			}).error(function(data){
+				$.each(JSON.parse(data.responseText).errores, function(index, val) {
+					var mensaje = '<p>'  + val  + '</p>';
+					$('.errores').append(mensaje);
+				});
+			});
+		});
+		
+	});
+	</script>
+
+</head>
+<body>
+		<form action="/editar_documento_post/" method="POST">
+		{%csrf_token%}
+		{{formulario.as_p}}
+		<input type="submit" value="Guardar">
+	</form>
+	<input type="hidden" id="documento_id" value="{{documento.id}}">
+	<span class="errores"></span>
+
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+		<script>
+	jQuery(document).ready(function($) {
+		$.ajaxSetup({
+			beforeSend: function(){
+				$(".errores").empty();
+			}
+		});
+
+		$('#id_materia_utel').autocomplete({
+			source: '/autocomplete_materia_utel/'
+		});
+		$('#id_materia_a_revalidar').autocomplete({
+			source: '/autocomplete_materias_externas/'
+		});
+		$('form').submit(function(event){
+			event.preventDefault();
+			$.post('/editar_materia_post/' + $('#id_materia').val() + '/', $('form').serialize(), function(data, textStatus, xhr) {
+				window.location.reload();
+			}).error(function(data){
+				$.each(JSON.parse(data.responseText).errores, function(index, val) {
+					var mensaje = '<p>'  + val  + '</p>';
+					$('.errores').append(mensaje);
+				});
+			});
+		});
+		
+	});
+	</script>
+
+</head>
+<body>
+		<form action="/editar_materia_post/" method="POST">{%csrf_token%}
+		{{formulario.as_p}}
+		<input type="submit" value="Guardar">
+	</form>
+	<input type="hidden" id="id_materia" value="{{detalle_documento.id}}">
+	<span class="errores"></span>
+
+</body>
+</html>
+

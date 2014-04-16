@@ -1,0 +1,253 @@
+.historial_academico_info{
+	width:80%;
+	color:#666;
+	}
+.historial_academico_info th{
+	font-weight:bold;
+	padding:5px;
+	font-size:14px;
+	text-align:right;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	}
+.historial_academico_info td{
+	font-weight:normal;
+	padding:5px;
+	font-size:14px;
+	color:#666;
+	font-family:Arial, Helvetica, sans-serif;
+	text-align:left;
+	}
+.titulo_historial{
+	height: 25px;
+	background: url(img/menu_bg.jpg) repeat-x;
+	color: #090;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	text-shadow: 1px 1px #fff;
+	border-top-left-radius: 5px;
+	border: 1px solid #ccc;
+	font-weight: bold;
+}
+.titulo_historial2{
+	height: 25px;
+	background: url(img/menu_bg.jpg) repeat-x;
+	color: #090;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	text-shadow: 1px 1px #fff;
+	border-top-right-radius:5px;
+	border: 1px solid #ccc;
+	border-left:none;
+	font-weight: bold;
+}
+.titulo_historial3{
+	height: 25px;
+	background: url(img/menu_bg.jpg) repeat-x;
+	color: #090;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	text-shadow: 1px 1px #fff;
+	border: 1px solid #ccc;
+	border-left:none;
+	border-right:none;
+	font-weight: bold;
+}
+
+.informacion_historial{
+	width:70px;
+	color: #090;
+	text-align:center;
+}
+.informacion_historial_izquierda{
+	width:70px;
+	color: #090;
+	text-align:center;
+	border-top-left-radius:5px;
+	border-right:0px;
+	}
+.informacion_historial_derecha{
+	width:75px;
+	color: #090;
+	text-align:center;
+	border-top-right-radius:5px;
+	}
+.info_historial .informacion_historial_derecha{
+	border-right:none;
+	} 
+.informacion_historial_materias{
+	width:100px;
+	}
+.informacion_historial_p{
+	font-weight:normal;
+	font-size:14px;
+	color:#666;
+	text-align:center;
+	border:none;
+	}
+.tr_gris{
+	background: #FAFAFA;
+	}
+.informacion_historial_p .lista_materias{
+	text-align:left;
+	border-top:1px solid #ccc;
+	}
+.informacion_historial_p td{
+	padding:10px;
+	border-top:1px solid #ccc;
+	}
+table.espacio_tabla{
+	margin-bottom:30px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top:15px;
+	width:90%;
+	}
+.info_historial td.sin_borde{
+	border-right:none;
+	}
+div.historial_botones{
+	margin:0 auto;
+	width:200px;
+	text-align:center;
+	padding:10px;
+	}
+table.top_historial{
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:10px;
+	}
+
+table.top_historial2{
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:10px;
+	margin-top:10px;
+	}
+.historial_botones .bt_informacion_perfil{
+	margin:0px;
+	}
+.info_historial .titulo_h{
+	border-top: 0px;
+	border-top: 1px solid #ccc;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-right:0px;
+	color: #5b9c4c;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	padding-left: 15px;
+	background: #ebf3e3;
+	}
+.descargar_historial{
+	background:url(img/descargar_historial.png) no-repeat 0 center;
+	padding:10px 10px 10px 35px;
+	height:30px;
+	border:none;
+	color:#666;
+	font-family:Arial, Helvetica, sans-serif;
+	margin-bottom:10px;
+	}
+.descargar_historial:hover{
+	background:url(img/descargar_historial2.png) no-repeat 0 center;
+	color:#d52b1e;
+	}
+.pie_historial{
+	border-top: 0px;
+	border-top: 1px solid #ccc;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-right: 0px;
+	color: #5b9c4c;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	text-align: left;
+	padding-left: 15px;
+	background: #ebf3e3;
+	font-weight:bold;
+	}
+.datos_3{
+	padding-top:10px;
+	text-align:center;
+	background: #fff;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	}
+.confirmar_historial{
+	width:400px;
+	height:auto;
+	padding-top:20px;
+	}
+.confirmar_historial h1{
+	font-size:18px;
+	margin-bottom:15px;
+	}
+.confirmar_historial label{
+	color:#666;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	margin-left:20px;
+	}
+.confirmar_historial input[type=radio]{
+	margin-left:5px;
+	}
+.confirmar_historial .botones_informacion_perfil{
+	width:auto;
+	float:right;
+	padding:0px;
+	margin-right:5px;}
+.modulo_datos{
+	background:#fafafa;
+	border:1px solid #ccc;
+	border-radius:5px;
+	padding:10px;
+	margin:5px;}
+.alinear_der input[type=radio]{
+	float:right;
+	margin-right:150px;
+	}
+h2.subtitulo{
+	color:#999;
+	font-weight:bold;
+	text-align:center;
+	margin:0px;
+	padding:0px;
+	}
+.nota{
+	width:90%;
+	margin:0 auto;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #8c7203;
+	border: 1px solid #C90;
+	background-color: #fefae8;
+	border-radius: 3px;
+	padding:5px;
+	text-decoration: none;
+	box-shadow: 1px 1px 1px #ccc;}
+.nota p{
+	padding-bottom:5px;
+	padding-left:0px;}
+.nota span{
+	color:#d52b1e;
+	font-weight:bold;}
+
+.nota1{
+	width:85%;
+	margin:0 auto;
+	margin-bottom:15px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #8c7203;
+	padding:0px;
+	text-decoration: none;
+	text-align:center;}
+.nota1 p{
+	font-style:italic;
+	font-weight:bold;
+	font-size:14px;}

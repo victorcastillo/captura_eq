@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+		<script>
+	jQuery(document).ready(function($) {
+		$.ajaxSetup({
+			beforeSend: function(){
+				$(".errores").empty();
+			}
+		});
+
+		$('#id_materia_utel').autocomplete({
+			source: '/autocomplete_materia_utel/'
+		});
+		$('#id_materia_a_revalidar').autocomplete({
+			source: '/autocomplete_materias_externas/'
+		});
+		$('form').submit(function(event){
+			event.preventDefault();
+			$.post('/agregar_pre_dic_post/', $('form').serialize(), function(data, textStatus, xhr) {
+				window.location.reload();
+			}).error(function(data){
+				$.each(JSON.parse(data.responseText).errores, function(index, val) {
+					var mensaje = '<p>'  + val  + '</p>';
+					$('.errores').append(mensaje);
+				});
+			});
+		});
+		
+	});
+	</script>
+
+</head>
+<body>
+		<form action="/agregar_documento_post/" method="POST">{%csrf_token%}
+		{{formulario.as_p}}
+		<input type="submit" value="Guardar">
+	</form>
+	<span class="errores"></span>
+
+</body>
+</html>
+

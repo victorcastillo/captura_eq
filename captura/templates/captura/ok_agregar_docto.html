@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+		jQuery(document).ready(function($) {
+			$('#misma_persona').click(function(){
+				$.get('/agregar_documento/', "{{info_misma_persona}}" function(data) {
+					$.fancybox(data);
+				});
+			});
+			$('#otro_documento').click(function(){
+				$.get('/agregar_documento/', function(data) {
+					$.fancybox(data);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	<button id="misma_persona"> Agregar otro documento a la misma persona</button>
+	<button id="otro_documento">Agregar otro documento</button>
+</body>
+</html>
