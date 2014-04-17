@@ -5,7 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('captura.views',
     # Examples:
-    url(r'^documento/(?P<id_documento>\d+)/$', 'home', name='home'),
+    url(r'^$', 'login_view'),
+    url(r'^documento/(?P<id_documento>\d+)/', 'home', name='home'),
     url(r'^login/', 'login_view'),
     url(r'^logout/', 'logout_view'),
     url(r'^agregar_documento/', 'agregar_documento'),
