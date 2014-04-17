@@ -47,7 +47,7 @@ def agregar_documento(request):
 def agregar_documento_post(request):
 	from .forms import DocumentoForm
 	import json
-	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio
+	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio, Universidad
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
 		documento = Documento()
@@ -65,6 +65,13 @@ def agregar_documento_post(request):
 			programa_externo = programa_externo[0]
 		else:
 			programa_externo = ProgramaExterno.objects.create(nombre=formulario.cleaned_data['programa_externo'])
+		
+		universidad = Universidad.objects.filter(nombre=formulario.cleaned_data['universidad'])
+		if universidad:
+			universidad = universidad[0]
+		else:
+			universidad = Universidad.objects.create(nombre=formulario.cleaned_data['universidad'])
+		
 		pais = Pais.objects.filter(pais=formulario.cleaned_data['pais'])
 		if pais:
 			pais = pais[0]
@@ -81,7 +88,7 @@ def agregar_documento_post(request):
 		else:
 			municipio = Municipio.objects.create(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
 		documento.capturista = request.user
-		documento.universidad = formulario.cleaned_data['universidad']
+		documento.universidad = universidad
 		documento.alumno_prospecto = formulario.cleaned_data['alumno_prospecto']
 		documento.folio = formulario.cleaned_data['folio']
 		documento.tipo_docto = formulario.cleaned_data['tipo_docto']
@@ -130,7 +137,7 @@ def editar_documento(request, id_documento):
 def editar_documento_post(request, id_documento):
 	from .forms import DocumentoForm
 	import json
-	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio
+	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio, Universidad
 	import datetime
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
@@ -158,6 +165,15 @@ def editar_documento_post(request, id_documento):
 			programa_externo = programa_externo[0]
 		else:
 			programa_externo = ProgramaExterno.objects.create(nombre=formulario.cleaned_data['programa_externo'])
+		
+
+		universidad = Universidad.objects.filter(nombre=formulario.cleaned_data['universidad'])
+		if universidad:
+			universidad = universidad[0]
+		else:
+			universidad = Universidad.objects.create(nombre=formulario.cleaned_data['universidad'])
+
+
 		pais = Pais.objects.filter(pais=formulario.cleaned_data['pais'])
 		if pais:
 			pais = pais[0]
@@ -173,7 +189,7 @@ def editar_documento_post(request, id_documento):
 			municipio = municipio[0]
 		else:
 			municipio = Municipio.objects.create(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
-		documento.universidad = formulario.cleaned_data['universidad']
+		documento.universidad = universidad
 		documento.alumno_prospecto = formulario.cleaned_data['alumno_prospecto']
 		documento.folio = formulario.cleaned_data['folio']
 		documento.tipo_docto = formulario.cleaned_data['tipo_docto']
@@ -228,7 +244,7 @@ def agregar_pre_dic(request):
 def agregar_pre_dic_post(request, id_documento):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import DetalleDocumento, LogDetalleDocto, MateriaExterna, Documento, Cat_Asignatura
+	from .models import DetalleDocumento, LogDetalleDocto, MateriaExterna, Documento, Cat_Asignatura, Asignatura_Licenciatura
 	formulario = DetalleDocumentoForm(request.POST)
 	if formulario.is_valid():
 		detalle_documento = DetalleDocumento()
@@ -241,18 +257,20 @@ def agregar_pre_dic_post(request, id_documento):
 			materia_externa = materia_externa[0]
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
-		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
+		detalle_documento.materia_externa = materia_externa
+		materia_utel = Cat_Asignatura.objects.filter(asignatura=formulario.cleaned_data['materia_utel']).values_list('id', flat=True)
+		asig_utel = Asignatura_Licenciatura.objects.filter(licenciatura__modalidad__id=1, cat_asignatura__id__in=materia_utel).distinct().values_list('cat_asignatura__id', flat=True)
+		_materia_utel = Cat_Asignatura.objects.get(id=asig_utel[0])
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento, materia_utel=_materia_utel)
 		if doc_existe:
-			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
+			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento-Materia Externa y Materia UTEL."}}
 			content = json.dumps(response)
 			http_response = HttpResponse(content, mimetype='application/json')
 			http_response.status_code = 500
 			http_response.content = content
 			return http_response			
-		detalle_documento.materia_externa = materia_externa
-		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
+		detalle_documento.materia_utel = _materia_utel
 		detalle_documento.save()
-
 		log_detalle_documento.log_detalle_documento = detalle_documento
 		log_detalle_documento.log_materia_utel = detalle_documento.materia_utel
 		log_detalle_documento.log_materia_externa = detalle_documento.materia_externa
@@ -291,7 +309,7 @@ def editar_materia(request, id_materia):
 def editar_materia_post(request, id_materia):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import LogDetalleDocto, DetalleDocumento, MateriaExterna, Cat_Asignatura
+	from .models import LogDetalleDocto, DetalleDocumento, MateriaExterna, Cat_Asignatura, Asignatura_Licenciatura
 	import datetime
 	
 	formulario = DetalleDocumentoForm(request.POST)
@@ -304,8 +322,11 @@ def editar_materia_post(request, id_materia):
 			materia_externa = materia_externa[0]
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
-		
-		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=detalle_documento.documento).values_list('id', flat=True)
+
+		materia_utel = Cat_Asignatura.objects.filter(asignatura=formulario.cleaned_data['materia_utel']).values_list('id', flat=True)
+		asig_utel = Asignatura_Licenciatura.objects.filter(licenciatura__modalidad__id=1, cat_asignatura__id__in=materia_utel).distinct().values_list('cat_asignatura__id', flat=True)
+		_materia_utel = Cat_Asignatura.objects.get(id=asig_utel[0])
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=detalle_documento.documento, materia_utel=_materia_utel).values_list('id', flat=True)
 		doc_existe = [int(x) for x in doc_existe]
 		try:
 			doc_existe.remove(int(id_materia))
@@ -318,7 +339,7 @@ def editar_materia_post(request, id_materia):
 			http_response.content = content
 			return http_response			
 		detalle_documento.materia_externa = materia_externa
-		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
+		detalle_documento.materia_utel = _materia_utel
 		detalle_documento.fecha_update = datetime.datetime.now()
 		detalle_documento.save()
 
@@ -341,10 +362,12 @@ def editar_materia_post(request, id_materia):
 
 @require_http_methods(['GET'])
 def autocomplete_materia_utel(request):
-	from .models import Cat_Asignatura
+	from .models import Cat_Asignatura, Asignatura_Licenciatura
 	import json
-	materias = Cat_Asignatura.objects.filter(asignatura__contains=request.GET['term']).values_list('asignatura', flat=True)
-	_materias = [unicode(x) for x in materias]
+	materias = Cat_Asignatura.objects.filter(asignatura__contains=request.GET['term']).values_list('id', flat=True)
+	asig_lic = Asignatura_Licenciatura.objects.filter(licenciatura__modalidad__id=1, cat_asignatura__id__in=materias).distinct().values_list('cat_asignatura__asignatura', flat=True)
+	print asig_lic
+	_materias = [unicode(x) for x in asig_lic]
 	materias_json = json.dumps(_materias)
 	return HttpResponse(materias_json, mimetype="application/json")
 
