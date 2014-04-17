@@ -27,16 +27,36 @@
 	{%endblock js%}
 </head>
 <body>
+
 <br>
 <h1>Administración de captura de documentos</h1>
-	{%if user.is_authenticated%}
+{%if user.is_authenticated%}
      <div class="autentificacion">
-     	<p>Hola {{user.first_name}} {{user.last_name}}</p>
+		<p class="nombre_bienvenida">¡Hola {{user.first_name}} {{user.last_name}}!</p>
      	<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
 		<a href="/logout" class="salir">Salir</a>
     </div>
+{%endif%}
+<div class="contenedor">
+<div class="informacion_documento no_borde">
+	{%if documento%}
+		<p><b>Universidad:</b><br> {{documento.universidad}}</p>
+		{%if documento.folio%}
+			<p><b>Folio:</b><br> {{documento.folio}}</p>
+		{%endif%}
+		<p><b>Tipo del documento:</b><br> {{documento.tipo_docto.tipo_docto}}</p>
+		<p><b>Programa externo:</b><br> {{documento.programa_externo.nombre}}</p>
+		<p><b>Nombre del Capturista:</b><br> {{documento.capturista.first_name}} {{documento.capturista.last_name}}</p>
+		<p><b>Nombre del Prospecto o Alumno:</b><br> {{documento.alumno_prospecto}}</p>
+        <div class="botones_documento">
+        <a href="/" class="boton">Ir a el documento</a>
+		<button onClick="editar_documento()" id="editar_documento" class="editar_documento">Editar documento</button>
+		<input type="hidden" value="{{documento.id}}" id="documento_id">
+        </div>
 	{%endif%}
+    </div>
 	{%block body%}
 	{%endblock body%}
+   
 </body>
 </html>
