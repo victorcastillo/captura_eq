@@ -12,6 +12,7 @@
 	
 		<div class="datos_resultados">
   <table class="resultados_busqueda">
+  {%if resultados%}
   <thead>
   <tr>
   	<th>ID</th>
@@ -24,6 +25,7 @@
     <th>Acciones</th>
   </tr>
   </thead>
+  {%endif%}
   <tbody>
   {%for documento in resultados%}
   <tr class="dividir_tr">
