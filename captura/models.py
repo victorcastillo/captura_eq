@@ -60,7 +60,8 @@ class Municipio(models.Model):
 
 class Documento(models.Model):
   capturista = models.ForeignKey(User)
-  universidad = models.CharField(max_length=200)
+  # universidad = models.CharField(max_length=200)
+  universidad = models.ForeignKey('Universidad')
   programa_externo = models.ForeignKey('ProgramaExterno')
   alumno_prospecto = models.CharField(max_length=200)
   tipo_docto = models.ForeignKey('TipoDocto')
@@ -72,6 +73,9 @@ class Documento(models.Model):
   class Meta:
     unique_together =  ('tipo_docto', 'alumno_prospecto')
 
+
+class Universidad(models.Model):
+  nombre = models.CharField(max_length=200) 
 
 class LogDocto(models.Model):
 	log_documento = models.ForeignKey('Documento')
@@ -98,7 +102,7 @@ class DetalleDocumento(models.Model):
   fecha_update = models.DateTimeField(auto_now_add=True)
 
   class Meta:
-    unique_together = ('documento', 'materia_externa')
+    unique_together = ('documento', 'materia_externa', 'materia_utel')
 
 
   # class Meta:
