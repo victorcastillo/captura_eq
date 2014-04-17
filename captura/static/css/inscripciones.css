@@ -83,19 +83,22 @@ select{
 	border-radius:3px;
 	margin-top:5px;}
 input[type=submit]{
-	background:#fafafa;
-	color:#666;
-	border:1px solid #ccc;
-	border-radius:3px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-    height: 28px;
-    text-transform: uppercase;
-    width: 75px;
-	margin:3px 0px;}
+	text-align: center;
+	color: #666;
+	height: 25px;
+	padding: 0px;
+	text-shadow: 1px 1px #FFF;
+	position: relative;
+	width: 100px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background: url(img/fondo_menu.jpg) repeat-x;
+	margin-left: 28px;
+	margin-top: 5px;}
 button{
-	background:#fafafa;
+	background: url(img/fondo_menu.jpg) repeat-x;
 	color:#666;
 	border:1px solid #ccc;
 	border-radius:3px;
@@ -113,8 +116,14 @@ button:hover{
 input[type=submit]:hover{
 	background:#d6e7c6;
 	color:#666;}
+a{
+
+	color:#d52b1e;
+	}
+a:hover{
+	color:#666;}
 a.boton{
-	background:#eff0ef;
+	background: url(img/fondo_menu.jpg) repeat-x;
 	color:#666;
 	border:1px solid #ccc;
 	border-radius:3px;
@@ -189,6 +198,9 @@ h1{
 	color:#777;
 	margin:0px auto;
 	border-bottom:1px dotted #ccc;}
+.botones_edicion{
+	text-align:right;
+	width:100% !important;}
 .informacion_documento p{
 	display:inline-block;
 	width:30%;}
@@ -219,6 +231,8 @@ h1{
 	float:none;
 	display:inline-block;
 	}
+.contenedor a.derecha{
+	float:right !important;}
 .salir{
 	background:url(img/salir.png) no-repeat;
 	padding:5px 20px;
@@ -295,7 +309,16 @@ h1{
 .buscador{
 	width:90%;
 	margin:0 auto;
-	padding:5px;}
+	padding:5px;
+	text-align:left;}
+.buscador h2{
+	background: url(img/icn_busqueda2.png) no-repeat !important;
+	padding: 3px 0px 5px 30px!important;
+	color: #fff !important;
+	line-height: 20px !important;
+	margin: 0px 20px 0px 20px;
+	display:block;
+	font-size:16px;}
 .contenedor_bucador{
 	background:#fafafa;
 	border:1px solid #ccc;
@@ -349,3 +372,15 @@ h1{
 	opacity:1;}
 .no_borde{
 	border:none;}
+.nota{
+	margin-top:10px;
+	margin-left:40px;}
+.nombre_bienvenida{
+	margin-top: 10px;
+	margin-bottom: 5px;
+	height: 35px;
+	color: #090;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	text-shadow: 1px 1px #fff;}

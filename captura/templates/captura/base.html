@@ -27,16 +27,17 @@
 	{%endblock js%}
 </head>
 <body>
-<div class="contenedor">
+
 <br>
 <h1>Administración de captura de documentos</h1>
 {%if user.is_authenticated%}
      <div class="autentificacion">
-		<p>Hola {{user.first_name}} {{user.last_name}}</p>
+		<p class="nombre_bienvenida">¡Hola {{user.first_name}} {{user.last_name}}!</p>
      	<button id="agregar_eq" class="btn_agregar_doc"> Agregar Documento</button>
 		<a href="/logout" class="salir">Salir</a>
     </div>
 {%endif%}
+<div class="contenedor">
 <div class="informacion_documento no_borde">
 	{%if documento%}
 		<p><b>Universidad:</b><br> {{documento.universidad}}</p>
@@ -56,6 +57,6 @@
     </div>
 	{%block body%}
 	{%endblock body%}
-    </div>
+   
 </body>
 </html>
