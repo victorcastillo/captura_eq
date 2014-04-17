@@ -9,6 +9,55 @@ User.add_to_class('__unicode__', unicode_user)
 
 
 
+class Pais( models.Model ):
+  pais = models.CharField( max_length = 128, unique = True )
+  nombre_entidad = models.CharField( max_length = 64, null = True, blank = True )
+  nombre_municipio = models.CharField( max_length = 64, null = True, blank = True )
+  longuitud_codigo_postal = models.IntegerField( null = True, blank = True )
+  oficial = models.BooleanField( default = False )
+  abreviatura = models.CharField( max_length = 8, null = True, blank = True, unique = True)
+  nombre_rfc = models.CharField( max_length = 32, null = True, blank = True )
+  valida_rfc = models.CharField( max_length = 32, null = True, blank = True )
+
+  def __unicode__(self):
+    from django.utils.encoding import force_unicode
+    return force_unicode(self.pais)
+
+  class Meta:
+    managed = False
+    db_table = 'registro_pais'
+    verbose_name_plural = 'Paises'
+
+  
+class Entidad( models.Model ):
+  pais = models.ForeignKey('Pais')
+  entidad = models.CharField( max_length = 128 )
+  oficial = models.BooleanField( default = False )
+  abreviatura = models.CharField( max_length = 8, null = True, blank = True)
+
+  def __unicode__(self):
+    return unicode(self.entidad)
+
+  class Meta:
+    managed = False
+    db_table = 'registro_entidad'
+    verbose_name_plural = 'Entidades'
+    unique_together = ('entidad', 'pais')
+
+class Municipio(models.Model):
+  municipio = models.CharField(max_length=64)
+  entidad = models.ForeignKey('Entidad')
+  oficial = models.BooleanField(default=False)
+  
+  def __unicode__(self):
+    return self.municipio
+
+  class Meta:
+    managed = False
+    db_table = 'codpos_municipio'
+    unique_together = ('municipio', 'entidad')
+
+
 class Documento(models.Model):
   capturista = models.ForeignKey(User)
   universidad = models.CharField(max_length=200)
@@ -16,6 +65,7 @@ class Documento(models.Model):
   alumno_prospecto = models.CharField(max_length=200)
   tipo_docto = models.ForeignKey('TipoDocto')
   folio = models.CharField(max_length=50, null=True)
+  municipio = models.ForeignKey('Municipio')
   fecha_insert = models.DateTimeField(auto_now_add=True)
   fecha_update = models.DateTimeField(auto_now_add=True)
 

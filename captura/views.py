@@ -47,7 +47,7 @@ def agregar_documento(request):
 def agregar_documento_post(request):
 	from .forms import DocumentoForm
 	import json
-	from .models import Documento, LogDocto, ProgramaExterno
+	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
 		documento = Documento()
@@ -65,12 +65,28 @@ def agregar_documento_post(request):
 			programa_externo = programa_externo[0]
 		else:
 			programa_externo = ProgramaExterno.objects.create(nombre=formulario.cleaned_data['programa_externo'])
+		pais = Pais.objects.filter(pais=formulario.cleaned_data['pais'])
+		if pais:
+			pais = pais[0]
+		else:
+			pais = Pais.objects.create(pais=formulario.cleaned_data['pais'])
+		entidad = Entidad.objects.filter(entidad=formulario.cleaned_data['entidad'], pais=pais)
+		if entidad:
+			entidad = entidad[0]
+		else:
+			entidad = Entidad.objects.create(pais=pais, entidad=formulario.cleaned_data['entidad'])
+		municipio = Municipio.objects.filter(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
+		if municipio:
+			municipio = municipio[0]
+		else:
+			municipio = Municipio.objects.create(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
 		documento.capturista = request.user
 		documento.universidad = formulario.cleaned_data['universidad']
 		documento.alumno_prospecto = formulario.cleaned_data['alumno_prospecto']
 		documento.folio = formulario.cleaned_data['folio']
 		documento.tipo_docto = formulario.cleaned_data['tipo_docto']
 		documento.programa_externo = programa_externo
+		documento.municipio = municipio
 		documento.save()
 
 		log_documento.log_documento = documento
@@ -102,7 +118,10 @@ def editar_documento(request, id_documento):
 		'programa_externo': documento.programa_externo.nombre,
 		'alumno_prospecto': documento.alumno_prospecto,
 		'folio': documento.folio,
-		'tipo_docto': documento.tipo_docto.id
+		'tipo_docto': documento.tipo_docto.id,
+		'municipio': documento.municipio.municipio,
+		'entidad': documento.municipio.entidad.entidad,
+		'pais': documento.municipio.entidad.pais.pais
 		})
 	return render(request, 'captura/editar_documento.html', locals())
 
@@ -111,7 +130,7 @@ def editar_documento(request, id_documento):
 def editar_documento_post(request, id_documento):
 	from .forms import DocumentoForm
 	import json
-	from .models import Documento, LogDocto, ProgramaExterno
+	from .models import Documento, LogDocto, ProgramaExterno, Pais, Entidad, Municipio
 	import datetime
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
@@ -139,13 +158,28 @@ def editar_documento_post(request, id_documento):
 			programa_externo = programa_externo[0]
 		else:
 			programa_externo = ProgramaExterno.objects.create(nombre=formulario.cleaned_data['programa_externo'])
-
+		pais = Pais.objects.filter(pais=formulario.cleaned_data['pais'])
+		if pais:
+			pais = pais[0]
+		else:
+			pais = Pais.objects.create(pais=formulario.cleaned_data['pais'])
+		entidad = Entidad.objects.filter(entidad=formulario.cleaned_data['entidad'], pais=pais)
+		if entidad:
+			entidad = entidad[0]
+		else:
+			entidad = Entidad.objects.create(pais=pais, entidad=formulario.cleaned_data['entidad'])
+		municipio = Municipio.objects.filter(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
+		if municipio:
+			municipio = municipio[0]
+		else:
+			municipio = Municipio.objects.create(municipio=formulario.cleaned_data['municipio'], entidad=entidad)
 		documento.universidad = formulario.cleaned_data['universidad']
 		documento.alumno_prospecto = formulario.cleaned_data['alumno_prospecto']
 		documento.folio = formulario.cleaned_data['folio']
 		documento.tipo_docto = formulario.cleaned_data['tipo_docto']
 		documento.programa_externo = programa_externo
 		documento.fecha_update = datetime.datetime.now()
+		documento.municipio = municipio
 		documento.save()
 
 		log_documento.log_documento = documento

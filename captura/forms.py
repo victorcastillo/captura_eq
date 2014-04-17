@@ -10,6 +10,9 @@ class DocumentoForm(forms.Form):
 	programa_externo = forms.CharField(required=True, error_messages = {'required': "El programa externo es requerido."})
 	tipo_docto = forms.ModelChoiceField(required=True, queryset=TipoDocto.objects.filter(habilitado=True), error_messages = {'required': "El tipo de documento es requerido."})
 	folio = forms.CharField(required=False)
+	municipio = forms.CharField(required=True,error_messages = {'required': "El Municipio es requerido."})
+	entidad = forms.CharField(required=True,error_messages = {'required': "La Entidad es requerido."})
+	pais = forms.CharField(required=True,error_messages = {'required': "El País es requerido."})
 
 	def clean(self):
 		tipo_docto = self.data['tipo_docto']
