@@ -15,6 +15,11 @@
 		$('#id_programa_externo').autocomplete({
 			source: '/autocomplete_programas_externos/'
 		});
+
+		$('#id_universidad').autocomplete({
+			source: '/autocomplete_universidades/'
+		});
+
 		$('#editar_documento_post').submit(function(event){
 			event.preventDefault();
 			$.post('/editar_documento_post/' + $('#documento_id').val() +'/', $('form').serialize(), function(data, textStatus, xhr) {

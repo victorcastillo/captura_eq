@@ -30,7 +30,7 @@
   {%for documento in resultados%}
   <tr class="dividir_tr">
   	<td>{{documento.id}}</td>
-    <td>{{documento.universidad}}</td>
+    <td>{{documento.universidad.nombre}}</td>
     <td>{%if documento.folio%}
 				 {{documento.folio}}
 			{%endif%}</td>

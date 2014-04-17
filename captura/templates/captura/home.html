@@ -27,7 +27,11 @@
 {%block body%}
 	{%if documento_%}
     <div class="informacion_documento no_borde centrar">
+<<<<<<< HEAD
 		<p><b>Universidad:</b><br /> {{documento_.universidad}}</p>
+=======
+		<p><b>Universidad:</b><br /> {{documento_.universidad.nombre}}</p>
+>>>>>>> 8c5f759752637ada0cc09acd4161f84b53af45f6
 		{%if documento_.folio%}
 			<p><b>Folio:</b><br /> {{documento_.folio}}</p>
 		{%endif%}
