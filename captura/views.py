@@ -100,7 +100,7 @@ def agregar_documento_post(request):
 		log_documento.log_alumno_prospecto = documento.alumno_prospecto
 		log_documento.log_folio  = documento.folio
 		log_documento.log_programa_externo = documento.programa_externo
-		log_documento.log_universidad = documento.universidad.universidad
+		log_documento.log_universidad = documento.universidad.nombre
 		log_documento.usuario = request.user
 		log_documento.log_tipo_docto = documento.tipo_docto
 		log_documento.log_fecha = documento.fecha_insert
@@ -202,7 +202,7 @@ def editar_documento_post(request, id_documento):
 		log_documento.log_alumno_prospecto = documento.alumno_prospecto
 		log_documento.log_folio  = documento.folio
 		log_documento.log_programa_externo = documento.programa_externo
-		log_documento.log_universidad = documento.universidad.universidad
+		log_documento.log_universidad = documento.universidad.nombre
 		log_documento.usuario = request.user
 		log_documento.log_tipo_docto = documento.tipo_docto
 		log_documento.log_fecha = datetime.datetime.now()
