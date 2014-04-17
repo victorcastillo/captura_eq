@@ -17,11 +17,11 @@ setup_environ(settings)
 
 
 from captura.models import Documento
+from django.utils.encoding import smart_str
 
 if __name__ == '__main__':
 	_universidades = Documento.objects.all()
 	universidades = _universidades.values('id', 'universidad')
 	archivo = open('catalogo_universidades.txt', 'w+')
 	for universidad in universidades:
-		archivo.write(str(universidad['id']) + '|,' + str(universidad['universidad'])  + '\n')
-	_universidades.update(universidad=1)
+		archivo.write(str(universidad['id']) + '|,' + smart_str(universidad['universidad'])  + '\n')

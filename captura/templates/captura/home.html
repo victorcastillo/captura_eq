@@ -27,7 +27,7 @@
 {%block body%}
 	{%if documento_%}
     <div class="informacion_documento no_borde centrar">
-		<p><b>Universidad:</b><br /> {{documento_.universidad}}</p>
+		<p><b>Universidad:</b><br /> {{documento_.universidad.nombre}}</p>
 		{%if documento_.folio%}
 			<p><b>Folio:</b><br /> {{documento_.folio}}</p>
 		{%endif%}

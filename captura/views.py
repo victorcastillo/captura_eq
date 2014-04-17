@@ -121,7 +121,7 @@ def editar_documento(request, id_documento):
 	from .models import Documento
 	documento = Documento.objects.get(id=int(id_documento))
 	formulario = DocumentoForm({
-		'universidad': documento.universidad,
+		'universidad': documento.universidad.nombre,
 		'programa_externo': documento.programa_externo.nombre,
 		'alumno_prospecto': documento.alumno_prospecto,
 		'folio': documento.folio,
@@ -390,6 +390,15 @@ def autocomplete_programas_externos(request):
 	_programas = [unicode(x) for x in programas]
 	programas_json = json.dumps(_programas)
 	return HttpResponse(programas_json, mimetype="application/json")
+
+@require_http_methods(['GET'])
+def autocomplete_universidades(request):
+	from .models import Universidad
+	import json
+	unis = Universidad.objects.filter(nombre__contains=request.GET['term']).values_list('nombre', flat=True)
+	_unis = [unicode(x) for x in unis]
+	unis_json = json.dumps(_unis)
+	return HttpResponse(unis_json, mimetype="application/json")
 
 
 
