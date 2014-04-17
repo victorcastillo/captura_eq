@@ -13,6 +13,7 @@
 		<div class="datos_resultados">
   <table class="resultados_busqueda">
   <tr>
+  	<th>ID</th>
     <th>Universidad</th>
     <th>Folio</td>
     <th>Tipo del documento</th>
@@ -22,6 +23,7 @@
     <th>Acciones</th>
   </tr>
   <tr>
+  	<td>{{documento.id}}</td>
     <td>{{documento.universidad}}</td>
     <td>{%if documento.folio%}
 				 {{documento.folio}}
@@ -30,7 +32,7 @@
     <td>{{documento.programa_externo.nombre}}</td>
     <td>{{documento.capturista.first_name}} {{documento.capturista.last_name}}</td>
 	<td>{{documento.alumno_prospecto}}</td>
-    <td><a href="/asignar_documento/{{documento.id}}/">Ir a este Documento</a></td>
+    <td><a href="/documento/{{documento.id}}/">Ir a este Documento</a></td>
   </tr>
 </table>
 </div>

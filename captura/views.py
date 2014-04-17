@@ -13,20 +13,20 @@ def login_view(request):
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				return HttpResponseRedirect('/')
+				return HttpResponseRedirect('/buscador')
 		return render(request, 'captura/login.html', {})
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/buscador')
 
 def logout_view(request):
 	logout(request)
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/login')
 
 
 @login_required
-def home(request):
+def home(request, id_documento):
 	from .models import Documento, DetalleDocumento
 	try:
-		documento_ = Documento.objects.get(id=int(request.session['documento_id']))
+		documento_ = Documento.objects.get(id=int(id_documento))
 		detalles_documentos = DetalleDocumento.objects.filter(documento=documento_)
 	except:
 		pass
@@ -47,12 +47,19 @@ def agregar_documento(request):
 def agregar_documento_post(request):
 	from .forms import DocumentoForm
 	import json
-	from .models import *
+	from .models import Documento, LogDocto, ProgramaExterno
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
 		documento = Documento()
 		log_documento = LogDocto()
-		
+		busqueda = Documento.objects.filter(alumno_prospecto=formulario.cleaned_data['alumno_prospecto'], tipo_docto=formulario.cleaned_data['tipo_docto'])
+		if busqueda:
+			response = {'errores': {"error": "La combinación de el tipo del documento con el nombre del alumno debe ser único."}}
+			content = json.dumps(response)
+			http_response = HttpResponse(content, mimetype='application/json')
+			http_response.status_code = 500
+			http_response.content = content
+			return http_response				
 		programa_externo = ProgramaExterno.objects.filter(nombre=formulario.cleaned_data['programa_externo'])
 		if programa_externo:
 			programa_externo = programa_externo[0]
@@ -75,9 +82,7 @@ def agregar_documento_post(request):
 		log_documento.log_tipo_docto = documento.tipo_docto
 		log_documento.log_fecha = documento.fecha_insert
 		log_documento.save()
-
-		request.session['documento_id'] = documento.id
-		return HttpResponse()
+		return HttpResponse('/documento/' + str(documento.id) + '/')
 	else:
 		response = {'errores': formulario.errors}
         content = json.dumps(response)
@@ -106,13 +111,29 @@ def editar_documento(request, id_documento):
 def editar_documento_post(request, id_documento):
 	from .forms import DocumentoForm
 	import json
-	from .models import *
+	from .models import Documento, LogDocto, ProgramaExterno
 	import datetime
 	formulario = DocumentoForm(request.POST)
 	if formulario.is_valid():
 		documento = Documento.objects.get(id=id_documento)
 		log_documento = LogDocto()
-		
+		busqueda = Documento.objects.filter(alumno_prospecto=formulario.cleaned_data['alumno_prospecto'], tipo_docto=formulario.cleaned_data['tipo_docto'])
+		if busqueda:
+			if len(busqueda) == 1:
+				if int(busqueda[0].id) != int(id_documento):
+					response = {'errores': {"error": "La combinación de el tipo del documento con el nombre del alumno debe ser único."}}
+					content = json.dumps(response)
+					http_response = HttpResponse(content, mimetype='application/json')
+					http_response.status_code = 500
+					http_response.content = content
+					return http_response
+			else:
+				response = {'errores': {"error": "La combinación de el tipo del documento con el nombre del alumno debe ser único."}}
+				content = json.dumps(response)
+				http_response = HttpResponse(content, mimetype='application/json')
+				http_response.status_code = 500
+				http_response.content = content
+				return http_response				
 		programa_externo = ProgramaExterno.objects.filter(nombre=formulario.cleaned_data['programa_externo'])
 		if programa_externo:
 			programa_externo = programa_externo[0]
@@ -137,8 +158,7 @@ def editar_documento_post(request, id_documento):
 		log_documento.log_fecha = datetime.datetime.now()
 		log_documento.save()
 
-		request.session['documento_id'] = documento.id
-		return HttpResponse()
+		return HttpResponseRedirect('/documento/' + str(id_documento))
 	else:
 		response = {'errores': formulario.errors}
         content = json.dumps(response)
@@ -171,15 +191,15 @@ def agregar_pre_dic(request):
 
 @login_required
 @require_http_methods(['POST'])
-def agregar_pre_dic_post(request):
+def agregar_pre_dic_post(request, id_documento):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import *
+	from .models import DetalleDocumento, LogDetalleDocto, MateriaExterna, Documento, Cat_Asignatura
 	formulario = DetalleDocumentoForm(request.POST)
 	if formulario.is_valid():
 		detalle_documento = DetalleDocumento()
 		log_detalle_documento = LogDetalleDocto()
-		documento = Documento.objects.get(id=int(request.session['documento_id']))
+		documento = Documento.objects.get(id=int(id_documento))
 		detalle_documento.documento = documento
 		detalle_documento.calificacion = formulario.cleaned_data['calificacion']
 		materia_externa = MateriaExterna.objects.filter(nombre=formulario.cleaned_data['materia_a_revalidar'])
@@ -190,11 +210,11 @@ def agregar_pre_dic_post(request):
 		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
 		if doc_existe:
 			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
-        	content = json.dumps(response)
-        	http_response = HttpResponse(content, mimetype='application/json')
-        	http_response.status_code = 500
-        	http_response.content = content
-        	return http_response			
+			content = json.dumps(response)
+			http_response = HttpResponse(content, mimetype='application/json')
+			http_response.status_code = 500
+			http_response.content = content
+			return http_response			
 		detalle_documento.materia_externa = materia_externa
 		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
 		detalle_documento.save()
@@ -237,7 +257,7 @@ def editar_materia(request, id_materia):
 def editar_materia_post(request, id_materia):
 	from .forms import DetalleDocumentoForm
 	import json
-	from .models import *
+	from .models import LogDetalleDocto, DetalleDocumento, MateriaExterna, Cat_Asignatura
 	import datetime
 	
 	formulario = DetalleDocumentoForm(request.POST)
@@ -251,14 +271,18 @@ def editar_materia_post(request, id_materia):
 		else:
 			materia_externa = MateriaExterna.objects.create(nombre=formulario.cleaned_data['materia_a_revalidar'])
 		
-		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=documento)
+		doc_existe = DetalleDocumento.objects.filter(materia_externa=materia_externa, documento=detalle_documento.documento).values_list('id', flat=True)
+		doc_existe = [int(x) for x in doc_existe]
+		try:
+			doc_existe.remove(int(id_materia))
+		except: pass
 		if doc_existe:
 			response = {'errores': {"error": "Ya existe una Materia con esta combinación de Documento y Materia Externa."}}
-        	content = json.dumps(response)
-        	http_response = HttpResponse(content, mimetype='application/json')
-        	http_response.status_code = 500
-        	http_response.content = content
-        	return http_response			
+			content = json.dumps(response)
+			http_response = HttpResponse(content, mimetype='application/json')
+			http_response.status_code = 500
+			http_response.content = content
+			return http_response			
 		detalle_documento.materia_externa = materia_externa
 		detalle_documento.materia_utel = Cat_Asignatura.objects.get(asignatura=formulario.cleaned_data['materia_utel'])
 		detalle_documento.fecha_update = datetime.datetime.now()

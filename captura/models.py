@@ -10,14 +10,18 @@ User.add_to_class('__unicode__', unicode_user)
 
 
 class Documento(models.Model):
-	capturista = models.ForeignKey(User)
-	universidad = models.CharField(max_length=200)
-	programa_externo = models.ForeignKey('ProgramaExterno')
-	alumno_prospecto = models.CharField(max_length=200)
-	tipo_docto = models.ForeignKey('TipoDocto')
-	folio = models.CharField(max_length=50, null=True)
-	fecha_insert = models.DateTimeField(auto_now_add=True)
-	fecha_update = models.DateTimeField(auto_now_add=True)
+  capturista = models.ForeignKey(User)
+  universidad = models.CharField(max_length=200)
+  programa_externo = models.ForeignKey('ProgramaExterno')
+  alumno_prospecto = models.CharField(max_length=200)
+  tipo_docto = models.ForeignKey('TipoDocto')
+  folio = models.CharField(max_length=50, null=True)
+  fecha_insert = models.DateTimeField(auto_now_add=True)
+  fecha_update = models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+    unique_together =  ('tipo_docto', 'alumno_prospecto')
+
 
 class LogDocto(models.Model):
 	log_documento = models.ForeignKey('Documento')

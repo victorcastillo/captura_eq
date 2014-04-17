@@ -8,11 +8,13 @@
 			$('#misma_persona').click(function(){
 				$.get('/agregar_documento/', "{{info_misma_persona}}" function(data) {
 					$.fancybox(data);
+					$.fancybox.center(true);
 				});
 			});
 			$('#otro_documento').click(function(){
 				$.get('/agregar_documento/', function(data) {
 					$.fancybox(data);
+					$.fancybox.center(true);
 				});
 			});
 		});

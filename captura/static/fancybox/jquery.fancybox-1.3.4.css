@@ -63,6 +63,7 @@
 	outline: none;
 	display: none;
 	border-radius:8px;
+	top:10px !important;
 }
 
 #fancybox-outer {

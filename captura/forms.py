@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import TipoDocto, Cat_Asignatura
+from .models import TipoDocto, Cat_Asignatura, Documento
 from django.utils.encoding import smart_unicode 
 from django.contrib.auth.models import User
 
 class DocumentoForm(forms.Form):
+	alumno_prospecto = forms.CharField(required=True, error_messages = {'required': "El nombre del Alumno/Prospecto es requerido."})
 	universidad = forms.CharField(required=True, error_messages = {'required': "La universidad es requerida."})
 	programa_externo = forms.CharField(required=True, error_messages = {'required': "El programa externo es requerido."})
-	alumno_prospecto = forms.CharField(required=True, error_messages = {'required': "El nombre del Alumno/Prospecto es requerido."})
 	tipo_docto = forms.ModelChoiceField(required=True, queryset=TipoDocto.objects.filter(habilitado=True), error_messages = {'required': "El tipo de documento es requerido."})
 	folio = forms.CharField(required=False)
 	# materia_a_revalidar = forms.CharField(required=True, error_messages = {'required': "La Materia externa es requerida."})
@@ -17,9 +17,9 @@ class DocumentoForm(forms.Form):
 	def clean(self):
 		tipo_docto = self.data['tipo_docto']
 		if tipo_docto:
-			tipo_docto = TipoDocto.objects.get(id=tipo_docto).tipo_docto
+			tipo_docto = TipoDocto.objects.get(id=tipo_docto)
 			folio = self.data['folio']
-			if tipo_docto != "Predictamen":
+			if tipo_docto.tipo_docto != "Predictamen":
 				if (folio is None) or len(folio) == 0:
 					self._errors['folio'] = self.error_class([smart_unicode('Cuando es un Dictamen debe proporcionar el folio que viene en el documento.')])
 		# if self.data['materia_utel']			:
