@@ -440,8 +440,9 @@ btn_resultado{
 	background:#fefae8;
 	border-radius:5px;
 	border:1px solid #C90;
-	padding:15px 15px 0px 15px;
+	padding:15px 10px 0px 15px;
 	color:#8c7203;
 	box-shadow:1px 1px 1px #ccc;}
 .centrar p{
-	width:30%;}
+	width: 230px;
+	vertical-align: top;}
