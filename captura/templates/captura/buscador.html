@@ -48,12 +48,12 @@
 </table>
 <div class="paginacion">
   <ul>
-    <li title="anterior" class="paginacion_vacio">
+    <li title="anterior">
       {%for documento in resultados.paginator.page_range%}
           {%if documento == resultados.number%}
-            <p class="numero_paginacion">{{documento}}</p>
+            <p>{{documento}}</p>
           {%else%}
-            <a href="/buscador/alumnos?page={{documento}}{{caracteristicas_url}}"><li>{{documento}}</li></a>
+            <a href="/buscador/alumnos?page={{documento}}{{caracteristicas_url}}">{{documento}}</a>
           {%endif%}
       {%endfor%}
     </li>
