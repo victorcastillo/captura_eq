@@ -1,4 +1,50 @@
 /* ESTILOS GENERALES -------------------- */
+.paginacion ul{
+	width:90%;
+	color:#4E514A;
+	text-align:right;
+	margin:0 auto;
+	padding:0px;}
+.paginacion ul li{
+	display:inline-block;
+	width:5%;
+	color:#B87A00;
+	list-style:none;
+	border:2px solid #7ab800;
+	font-weight:bold;
+	border-radius:50px;
+	text-align:center;
+	margin-bottom:5px;
+	}
+.paginacion ul li a{
+	text-decoration:none;
+	color:#B87A00;
+	font-weight:bold;
+	}
+.paginacion ul li p{
+	color:#B87A00;
+	font-weight:bold;
+	display:none;
+	}
+.paginacion ul li:hover{
+	background:#fafafa;
+	color:#B87A00;
+	border:2px solid #bbb;}
+.numero_paginacion{
+	width:5%;
+	display:inline-block;
+	color:#d52b1e;
+	list-style:none;
+	border:2px solid #ccc;
+	font-weight:bold;
+	border-radius:50px;
+	text-align:center;
+	margin-bottom:5px;
+	background:#fafafa;
+}
+.paginacion ul li.paginacion_vacio{
+	border:0px;
+	width:0px;}
 @font-face{
   font-family: "Century Gothic";
   src: url(../fonts/CenturyGothic.eot);

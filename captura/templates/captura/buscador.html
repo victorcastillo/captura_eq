@@ -12,6 +12,7 @@
 	
 		<div class="datos_resultados">
   <table class="resultados_busqueda">
+    <p><b>Número de resultados {{resultados.paginator.count}}</b></p>
   {%if resultados%}
   <thead>
   <tr>
@@ -27,7 +28,7 @@
   </thead>
   {%endif%}
   <tbody>
-  {%for documento in resultados%}
+  {%for documento in resultados.object_list%}
   <tr class="dividir_tr">
   	<td>{{documento.id}}</td>
     <td>{{documento.universidad.nombre}}</td>
@@ -45,6 +46,19 @@
 	{%endfor%}
   </tbody>
 </table>
+<div class="paginacion">
+  <ul>
+    <li title="anterior" class="paginacion_vacio">
+      {%for documento in resultados.paginator.page_range%}
+          {%if documento == resultados.number%}
+            <p class="numero_paginacion">{{documento}}</p>
+          {%else%}
+            <a href="/buscador/alumnos?page={{documento}}{{caracteristicas_url}}"><li>{{documento}}</li></a>
+          {%endif%}
+      {%endfor%}
+    </li>
+  </ul>
+</div>
 </div>
 	
 {%endblock body%}

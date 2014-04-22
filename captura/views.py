@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils.encoding import smart_str
 
 def login_view(request):
 	if not request.user.is_authenticated():
@@ -409,16 +411,32 @@ def buscador(request):
 	parametros = {}
 	resultados = []
 	if request.GET:
+		caracteristicas_url = []
 		formulario = BuscadorForm(request.GET)
 		if request.GET.has_key('capturista'):
 			if len(request.GET['capturista']) != 0:
 				parametros['capturista__id'] = int(request.GET['capturista'])
+				caracteristicas_url.append("capturista=%s" % request.GET['capturista'])
 		if request.GET.has_key('nombre'):
 			if len(request.GET['nombre']) != 0:
 				parametros['alumno_prospecto__contains'] = request.GET['nombre']
+				caracteristicas_url.append("nombre=%s" % smart_str(request.GET['nombre']))
 		if request.GET.has_key('tipo_documento'):
 			if len(request.GET['tipo_documento']) != 0:
 				parametros['tipo_docto__id'] = request.GET['tipo_documento']
-		resultados = Documento.objects.filter(**parametros)
+				caracteristicas_url.append("tipo_documento=%s" % request.GET['tipo_documento'])
+		resultados = Documento.objects.filter(**parametros).order_by('id')
+		paginator = Paginator(resultados, 20)
+		page = request.GET.get('page', 1)
+		if caracteristicas_url:
+			caracteristicas_url = "&" + '&'.join(caracteristicas_url)
+		else:
+			caracteristicas_url = ''
+		try:
+			resultados = paginator.page(page)
+		except PageNotAnInteger:
+			resultados= paginator.page(1)
+		except EmptyPage:
+			resultados = paginator.page(1)
 	return render(request, 'captura/buscador.html', locals())
 
