@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 def unicode_user(self):
-  return self.first_name + ' ' + self.last_name
+  return self.first_name
 
 User.add_to_class('__unicode__', unicode_user)
 
@@ -63,13 +63,14 @@ class Documento(models.Model):
   # universidad = models.CharField(max_length=200)
   universidad = models.ForeignKey('Universidad')
   programa_externo = models.ForeignKey('ProgramaExterno')
+  programa_utel = models.ForeignKey('Licenciatura', null=True)
   alumno_prospecto = models.CharField(max_length=200)
   tipo_docto = models.ForeignKey('TipoDocto')
   folio = models.CharField(max_length=50, null=True)
   municipio = models.ForeignKey('Municipio')
   fecha_insert = models.DateTimeField(auto_now_add=True)
   fecha_update = models.DateTimeField(auto_now_add=True)
-
+  numero_materias = models.IntegerField(null=True)
   class Meta:
     unique_together =  ('tipo_docto', 'alumno_prospecto')
 
@@ -78,14 +79,15 @@ class Universidad(models.Model):
   nombre = models.CharField(max_length=200) 
 
 class LogDocto(models.Model):
-	log_documento = models.ForeignKey('Documento')
-	log_universidad = models.CharField(max_length=200)
-	log_programa_externo = models.ForeignKey('ProgramaExterno')
-	log_alumno_prospecto = models.CharField(max_length=200)
-	log_tipo_docto = models.ForeignKey('TipoDocto')
-	log_folio = models.CharField(max_length=50, null=True)
-	log_fecha = models.DateTimeField()
-	usuario = models.ForeignKey(User)
+  log_documento = models.ForeignKey('Documento')
+  log_universidad = models.CharField(max_length=200)
+  log_programa_externo = models.ForeignKey('ProgramaExterno')
+  log_programa_utel = models.ForeignKey('Licenciatura', null=True)
+  log_alumno_prospecto = models.CharField(max_length=200)
+  log_tipo_docto = models.ForeignKey('TipoDocto')
+  log_folio = models.CharField(max_length=50, null=True)
+  log_fecha = models.DateTimeField()
+  usuario = models.ForeignKey(User)
 
 
 class MateriaExterna(models.Model):
@@ -100,10 +102,14 @@ class DetalleDocumento(models.Model):
   calificacion = models.CharField(max_length=15, null=True)
   fecha_insert = models.DateTimeField(auto_now_add=True)
   fecha_update = models.DateTimeField(auto_now_add=True)
+  eliminado = models.BooleanField(default=False)
 
   class Meta:
     unique_together = ('documento', 'materia_externa', 'materia_utel')
 
+
+class DocumentosIdsPronostico(models.Model):
+  id_doc = models.IntegerField()
 
   # class Meta:
   #   unique_together = ('documento', 'materia_externa')
@@ -125,7 +131,7 @@ class TipoDocto(models.Model):
 		return self.tipo_docto
 
 class ProgramaExterno(models.Model):
-	nombre = models.TextField()
+	nombre = models.CharField(max_length=300)
 	habilitado = models.BooleanField(default=True)
 	clasificacion = models.ForeignKey('ClasificacionPrograma', null=True)
 
@@ -211,6 +217,9 @@ class Licenciatura( models.Model ):
   modalidad = models.ForeignKey(Modalidad)
   asignaturas = models.ManyToManyField('Cat_Asignatura', through='Asignatura_Licenciatura')
 
+  def __unicode__(self):
+    return self.licenciatura
+  
   class Meta:
   	managed=False
   	db_table = 'registro_licenciatura'

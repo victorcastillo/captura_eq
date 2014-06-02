@@ -23,5 +23,7 @@ urlpatterns = patterns('captura.views',
     url(r'^asignar_documento/(?P<id_documento>\d+)/', 'asignar_documento'),
     url(r'^editar_materia/(?P<id_materia>\d+)/', 'editar_materia'),
     url(r'^editar_materia_post/(?P<id_materia>\d+)/', 'editar_materia_post'),
+    url(r'^calcular_pronosticos/', 'sacar_pronostico_equivalencias_hoy'),   
+    url(r'^calcular_pronosticos_por_documento/', 'sacar_pronostico_equivalencias_hoy_por_documento'), 
     url(r'^admin/', include(admin.site.urls)),
 )

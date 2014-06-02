@@ -1,0 +1,62 @@
+
+#linea_roja{
+	background: #7AB800;
+	border: 0px solid #ccc;
+	width: 100%;
+	height: 8px;
+}
+/*tabs*/
+
+.ui-tabs { } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs .ui-tabs-nav { 
+	width:99%;
+	height:33px;
+	background:url(img/menu_bg.jpg) repeat-x;
+	border:1px solid #fff;
+	padding-bottom:3px; }
+
+.ui-tabs .ui-tabs-nav li a { 
+    float:left;
+	border-right:1px double #ccc;
+	text-decoration:none;
+	list-style:none;
+	min-width:90px;
+	padding:5px 5px 5px 5px;
+	height:26px;
+	text-align: center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+.ui-tabs .ui-tabs-nav li:hover a { 
+    color:#fff;
+	background-color:#7AB800;
+	text-decoration:none;}
+	
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected { 
+    color:#fff;
+	background:#7AB800;
+	text-decoration:none;
+	}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; color: #FFF; font-weight:bold}
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0;  }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+
+#tabs{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	border:1px solid #fff;
+}
+#tabs_content{	
+ 	min-height: 400px;
+    padding: 10px 25px 20px;
+}
+
+#tab_curso, #tab_diplomado, #tab_licenciatura{
+ 	min-height: 400px;
+    padding:15px 20px 40px 20px;
+	background:#FFF;
+}
+.ui-widget-header{
+	background: none !important;
+}

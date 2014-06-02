@@ -22,7 +22,7 @@
 
 		$('#editar_documento_post').submit(function(event){
 			event.preventDefault();
-			$.post('/editar_documento_post/' + $('#documento_id').val() +'/', $('form').serialize(), function(data, textStatus, xhr) {
+			$.post('/editar_documento_post/' + $('#documento_id').val() +'/', $('#editar_documento_post').serialize(), function(data, textStatus, xhr) {
 				window.location.reload();
 			}).error(function(data){
 				$.each(JSON.parse(data.responseText).errores, function(index, val) {
@@ -39,9 +39,9 @@
 <body>
 <div class="modal_agregar" style="width:300px;">
 <h1>Editar documento</h1>
-		<form id="editar_documento_post" action="/editar_documento_post/" method="POST">
+		<form id="editar_documento_post"  method="POST">
 		{%csrf_token%}
-		{{formulario.as_p}}
+			{{formulario.as_p}}
         <div class="botones_modal">
 		<input type="submit" value="Guardar">
         </div>

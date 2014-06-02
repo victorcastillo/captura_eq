@@ -3,12 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+	.ui-autocomplete {
+    	max-height: 400px;
+    	overflow-y: auto;
+    	/* prevent horizontal scrollbar */
+    	overflow-x: hidden;
+  	}
+
+	</style>
 		<script>
 	jQuery(document).ready(function($) {
 		$.ajaxSetup({
 			beforeSend: function(){
 				$(".errores").empty();
 			}
+
 		});
 		$('#id_materia_utel').autocomplete({
 			source: '/autocomplete_materia_utel/'
@@ -18,8 +28,14 @@
 		});
 		$('#agregar_pre_dic_post').submit(function(event){
 			event.preventDefault();
+			$.fancybox.showActivity();
 			$.post('/agregar_pre_dic_post/' + window.location.pathname.split('/')[2] + '/', $('form').serialize(), function(data, textStatus, xhr) {
-				window.location.reload();
+				// window.location.reload();
+				$('#agregar_pre_dic').trigger('click');
+				$('.errores').empty();
+				$.fancybox.hideActivity();
+				// $.fancybox.close();
+				// $('#agregar_pre_dic').trigger('click');
 			}).error(function(data){
 				$.each(JSON.parse(data.responseText).errores, function(index, val) {
 					var mensaje = '<p>'  + val  + '</p>';
@@ -34,7 +50,7 @@
 </head>
 <body>
 <div class="modal_agregar" style="width:300px;">
-<h1>Agregar documento</h1>
+<h1>Agregar materia.</h1>
 <div class="modal_agregar" style="width:300px;">
 		<form id="agregar_pre_dic_post" action="/agregar_pre_dic_post/" method="POST">{%csrf_token%}
 		{{formulario.as_p}}

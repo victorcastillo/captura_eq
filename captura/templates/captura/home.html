@@ -6,6 +6,7 @@
 			$.get('/agregar_pre_dic/', function(data) {
 				$.fancybox(data);
 				$.fancybox.center(true);
+				$('input[name="materia_a_revalidar"]').focus();
 			});
 		});
 	});
@@ -38,11 +39,12 @@
 		<p><b>Municipio:</b><br /> {{documento_.municipio.municipio}}</p>
 		<p><b>Entidad:</b><br /> {{documento_.municipio.entidad.entidad}}</p>
 		<p><b>País:</b><br /> {{documento_.municipio.entidad.pais.pais}}</p>
+		<p><b>Programa UTEL:</b><br /> {{documento_.programa_utel.licenciatura}}</p>
       </div>
         <p class="botones_edicion">
 		<button onClick="editar_documento()" id="editar_documento" class="editar_documento">Editar documento</button>
 		<input type="hidden" value="{{documento_.id}}" id="documento_id">
-	{%if user == documento_.capturista%}
+	{%if user == documento_.capturista or user.is_superuser%}
 		<button id="agregar_pre_dic" class="btn_agregar_doc"> Agregar Materia</button>
 		</p>
 	{%endif%}
@@ -53,7 +55,7 @@
 				{%if materia.calificacion%}
 					<p class="calificacion"><b>Calificacion:</b><br /> {{materia.calificacion}}</p>
 				{%endif%}
-				{%if user == materia.documento.capturista%}
+				{%if user == materia.documento.capturista or user.is_superuser%}
 					<p class="acciones"><button class="materia" onclick="editar_materia({{materia.id}})" title="Editar Materia"></button></p>
 				{%endif%}
                 </div>

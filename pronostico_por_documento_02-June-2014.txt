@@ -1,0 +1,2 @@
+ID DOCUMENTO | FECHA | # Materias del PreDic | # Materias que coincidieron (casos) | Porcentaje 
+Porcentaje del día 02-June-2014 fue de 0.0 porciento
